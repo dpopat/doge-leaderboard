@@ -18,6 +18,9 @@ interface LeaderboardItemProps {
 }
 
 const formatAmount = (amount: number): string => {
+  if (amount >= 1000000000) {
+    return `${(amount / 1000000000).toFixed(1)}B`;
+  }
   if (amount >= 1000000) {
     return `${(amount / 1000000).toFixed(1)}M`;
   }
@@ -40,22 +43,22 @@ export default function LeaderboardItem({ id, votes, title, year, amount, rank, 
             <div className="flex items-center gap-3">
               {/* Vote Buttons */}
               <div className="flex flex-col items-center text-gray-600 w-8" onClick={handleVoteClick}>
-                <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-gray-200">
-                  <ChevronUp className="h-4 w-4" />
+                <Button variant="ghost" size="sm" className="h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200">
+                  <ChevronUp className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
-                <span className="text-sm font-medium min-w-[2rem] text-center">
+                <span className="text-xs md:text-sm font-medium min-w-[0.5rem] text-center">
                   {votes}
                 </span>
-                <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-gray-200">
-                  <ChevronDown className="h-4 w-4" />
+                <Button variant="ghost" size="sm" className="h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200">
+                  <ChevronDown className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
               </div>
-              <div>
-                <h3 className="text-lg font-semibold leading-tight">{title}</h3>
-                <p className="text-sm text-muted-foreground">#{rank} • {year}</p>
+              <div className="pr-1">
+                <h3 className="text-sm md:text-lg font-semibold leading-tight">{title}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground">#{rank} • {year}</p>
               </div>
             </div>
-            <div className="text-xl font-bold">
+            <div className="text-md md:text-xl font-semibold">
               ${formatAmount(amount)}
             </div>
           </div>

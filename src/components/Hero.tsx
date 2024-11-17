@@ -7,8 +7,8 @@ import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
 export default function Hero() {
   return (
     <section className="relative flex flex-col items-center justify-between flex-1 min-h-[85vh]">
-      <div className="flex flex-col items-center gap-2 mt-64">
-        <h2 className="text-6xl font-bold text-center tracking-tighter">
+      <div className="flex flex-col items-center gap-2 mx-3 mt-64">
+        <h2 className="text-5xl md:text-6xl font-bold text-center tracking-tighter">
           See Where Your Tax Dollars Go
         </h2>
         <p className="text-lg text-muted-foreground text-center">
@@ -22,7 +22,7 @@ export default function Hero() {
           y={-1}
           strokeDasharray={"4 2"}
           className={cn(
-            "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]"
+            "[mask-image:radial-gradient(250px_circle_at_center,white,transparent)] md:[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]"
           )}
         />
       <VelocityScroll

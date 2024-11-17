@@ -17,14 +17,14 @@ const MOCK_DATA = [
     votes: 1234,
     title: "Dr. Fauci's Transgender Monkey Study",
     year: "2023",
-    amount: 20700000,
+    amount: 20700,
   },
   {
     id: 204,
     votes: 2500,
     title: "Construction of a Luxury Spa with COVID Relief Funds",
     year: "2023",
-    amount: 15300000,
+    amount: 433235000000,
   },
   {
     id: 205,
@@ -191,7 +191,7 @@ export default function Leaderboard() {
       </div>
 
       <ShineBorder borderRadius={0} borderWidth={1.5} color={["#d19e00", "#a67102"]}>
-        <div className="rounded-none min-w-full border-2 border-black">
+        <div className="rounded-none min-w-full border md:border-2 border-black">
           {sortedData.map((item, index) => (
             <LeaderboardItem
               key={item.id}
