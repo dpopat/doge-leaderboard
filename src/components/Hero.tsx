@@ -12,7 +12,7 @@ export default function Hero() {
           See Where Your Tax Dollars Go
         </h2>
         <p className="text-lg text-muted-foreground text-center">
-          Make Government Spending Accountable to the People.
+          Let's keep the government accountable.
         </p>
       </div>
       <GridPattern
@@ -22,7 +22,7 @@ export default function Hero() {
           y={-1}
           strokeDasharray={"4 2"}
           className={cn(
-            "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]"
+            "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]"
           )}
         />
       <VelocityScroll

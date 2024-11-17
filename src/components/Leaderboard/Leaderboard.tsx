@@ -1,14 +1,15 @@
-'use client'
+"use client";
 
-import { useState } from 'react';
-import LeaderboardItem from './LeaderboardItem';
+import { useState } from "react";
+import LeaderboardItem from "./LeaderboardItem";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
+import ShineBorder from "@/components/ui/shine-border";
 
 const MOCK_DATA = [
   {
@@ -150,21 +151,21 @@ const MOCK_DATA = [
     title: "Study on the Sleep Patterns of Fruit Flies",
     year: "2023",
     amount: 29.5,
-  }
+  },
 ];
 
-type SortOption = 'votes' | 'amount' | 'recent';
+type SortOption = "votes" | "amount" | "recent";
 
 export default function Leaderboard() {
-  const [sortBy, setSortBy] = useState<SortOption>('votes');
+  const [sortBy, setSortBy] = useState<SortOption>("votes");
 
   const sortedData = [...MOCK_DATA].sort((a, b) => {
     switch (sortBy) {
-      case 'votes':
+      case "votes":
         return b.votes - a.votes;
-      case 'amount':
+      case "amount":
         return b.amount - a.amount;
-      case 'recent':
+      case "recent":
         return b.id - a.id;
       default:
         return 0;
@@ -174,7 +175,10 @@ export default function Leaderboard() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex justify-end mb-4 items-center font-semibold">
-        <Select value={sortBy} onValueChange={(value: SortOption) => setSortBy(value)}>
+        <Select
+          value={sortBy}
+          onValueChange={(value: SortOption) => setSortBy(value)}
+        >
           <SelectTrigger className="w-[180px] border-[0.5px] border-gray-300 bg-white rounded-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-black">
             <SelectValue />
           </SelectTrigger>
@@ -186,16 +190,18 @@ export default function Leaderboard() {
         </Select>
       </div>
 
-      <div className="border-[0.5px] border-black rounded-none">
-        {sortedData.map((item, index) => (
-          <LeaderboardItem 
-            key={item.id} 
-            {...item} 
-            rank={index + 1}
-            isLast={index === sortedData.length - 1}
-          />
-        ))}
-      </div>
+      <ShineBorder borderRadius={0} color={["#d19e00", "#a67102"]}>
+        <div className="rounded-none min-w-full border-[0.5px] border-black">
+          {sortedData.map((item, index) => (
+            <LeaderboardItem
+              key={item.id}
+              {...item}
+              rank={index + 1}
+              isLast={index === sortedData.length - 1}
+            />
+          ))}
+        </div>
+      </ShineBorder>
     </div>
   );
-} 
+}
