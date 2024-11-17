@@ -17,6 +17,16 @@ interface LeaderboardItemProps {
   isLast?: boolean;
 }
 
+const formatAmount = (amount: number): string => {
+  if (amount >= 1000000) {
+    return `${(amount / 1000000).toFixed(1)}M`;
+  }
+  if (amount >= 1000) {
+    return `${(amount / 1000).toFixed(1)}K`;
+  }
+  return amount.toString();
+};
+
 export default function LeaderboardItem({ id, votes, title, year, amount, rank, isLast }: LeaderboardItemProps) {
   const handleVoteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -28,11 +38,14 @@ export default function LeaderboardItem({ id, votes, title, year, amount, rank, 
         <PopoverTrigger asChild>
           <div className="flex items-center justify-between p-3 hover:bg-accent cursor-pointer">
             <div className="flex items-center gap-3">
-              <div className="flex flex-col items-center text-gray-600" onClick={handleVoteClick}>
+              {/* Vote Buttons */}
+              <div className="flex flex-col items-center text-gray-600 w-8" onClick={handleVoteClick}>
                 <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-gray-200">
                   <ChevronUp className="h-4 w-4" />
                 </Button>
-                <span className="text-sm font-medium">{votes}</span>
+                <span className="text-sm font-medium min-w-[2rem] text-center">
+                  {votes}
+                </span>
                 <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-gray-200">
                   <ChevronDown className="h-4 w-4" />
                 </Button>
@@ -43,7 +56,7 @@ export default function LeaderboardItem({ id, votes, title, year, amount, rank, 
               </div>
             </div>
             <div className="text-xl font-bold">
-              ${amount.toLocaleString()}M
+              ${formatAmount(amount)}
             </div>
           </div>
         </PopoverTrigger>

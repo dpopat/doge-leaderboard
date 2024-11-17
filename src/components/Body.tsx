@@ -20,7 +20,7 @@ export default function Body() {
             Hall Of Shame: Squanderers
           </button>
           <button
-            className="w-1/2 rounded-none border-2 px-3 py-3 bg-gray-100 text-gray-400 cursor-not-allowed"
+            className="w-1/2 rounded-none border-2 px-3 py-3 bg-gray-100 text-gray-400 border-l-0 cursor-not-allowed"
             aria-label="View Hall of Fame"
             aria-pressed="false"
             disabled
