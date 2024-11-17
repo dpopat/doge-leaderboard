@@ -9,7 +9,7 @@ export default function Body() {
           <p className="text-5xl md:text-7xl font-semibold">
             $<NumberTicker value={300} className="tracking-tight"/>M
           </p>
-          <p className="text-sm md:text-lg font-medium">Tax Dollars Wasted in 2023</p>
+          <p className="text-sm md:text-lg font-medium text-muted-foreground">Tax Dollars Wasted in 2023</p>
         </div>
         <div className="flex justify-center text-sm md:text-lg font-semibold text-gray-800 max-w-5xl mx-auto w-full">
           <button
@@ -20,7 +20,7 @@ export default function Body() {
             Hall Of Shame: Squanderers
           </button>
           <button
-            className="w-1/2 rounded-none border-2 px-3 py-3 bg-gray-100 text-gray-400 border-l-0 cursor-not-allowed"
+            className="w-1/2 rounded-none border-2 border-l-0 px-3 py-3 bg-gray-100 text-gray-400  cursor-not-allowed"
             aria-label="View Hall of Fame"
             aria-pressed="false"
             disabled
