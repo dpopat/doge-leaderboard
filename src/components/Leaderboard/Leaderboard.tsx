@@ -190,8 +190,8 @@ export default function Leaderboard() {
         </Select>
       </div>
 
-      <ShineBorder borderRadius={0} color={["#d19e00", "#a67102"]}>
-        <div className="rounded-none min-w-full border-[0.5px] border-black">
+      <ShineBorder borderRadius={0} borderWidth={1} color={["#d19e00", "#a67102"]}>
+        <div className="rounded-none min-w-full border border-black">
           {sortedData.map((item, index) => (
             <LeaderboardItem
               key={item.id}
