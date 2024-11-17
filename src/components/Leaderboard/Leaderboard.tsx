@@ -186,7 +186,7 @@ export default function Leaderboard() {
         </Select>
       </div>
 
-      <div className="border-[0.5px] border-gray-600 rounded-none">
+      <div className="border-[0.5px] border-black rounded-none">
         {sortedData.map((item, index) => (
           <LeaderboardItem 
             key={item.id} 

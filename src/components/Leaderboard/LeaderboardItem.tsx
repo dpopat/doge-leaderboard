@@ -14,7 +14,7 @@ interface LeaderboardItemProps {
 
 export default function LeaderboardItem({ id, votes, title, year, amount, rank, isLast }: LeaderboardItemProps) {
   return (
-    <Card className={`flex items-center justify-between p-3 rounded-none ${!isLast ? 'border-b-[0.5px] border-b-gray-600' : ''}`}>
+    <Card className={`flex items-center justify-between p-3 rounded-none ${!isLast ? 'border-b-[0.5px] border-b-black' : ''}`}>
       <div className="flex items-center gap-3">
         <div className="flex flex-col items-center text-gray-600">
           <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
