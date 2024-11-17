@@ -173,9 +173,9 @@ export default function Leaderboard() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="flex justify-end mb-4 items-center">
+      <div className="flex justify-end mb-4 items-center font-semibold">
         <Select value={sortBy} onValueChange={(value: SortOption) => setSortBy(value)}>
-          <SelectTrigger className="w-[180px] border-[0.5px] border-gray-600 bg-white rounded-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-black">
+          <SelectTrigger className="w-[180px] border-[0.5px] border-gray-300 bg-white rounded-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-black">
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="border-[0.5px] border-gray-600 rounded-none">
