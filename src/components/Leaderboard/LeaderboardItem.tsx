@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/popover";
 import { sendVote } from "./actions";
 import { useState, useEffect } from "react";
+import { CoolMode } from "../ui/cool-mode";
 
 type VoteState = "up" | "down" | null;
 
@@ -62,7 +63,7 @@ export default function LeaderboardItem({
 
   const handleUpvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (userVoteState === "up") return;
 
     setIsUpvoteLoading(true);
@@ -70,7 +71,7 @@ export default function LeaderboardItem({
       const voteChange = userVoteState === "down" ? 2 : 1;
       setOptimisticVotes(optimisticVotes + voteChange);
       await sendVote(item_id, true);
-      
+
       localStorage.setItem(`vote-${item_id}`, "up");
       setUserVoteState("up");
     } catch (error) {
@@ -82,7 +83,7 @@ export default function LeaderboardItem({
 
   const handleDownvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (userVoteState === "down") return;
 
     setIsDownvoteLoading(true);
@@ -90,7 +91,7 @@ export default function LeaderboardItem({
       const voteChange = userVoteState === "up" ? 2 : 1;
       setOptimisticVotes(optimisticVotes - voteChange);
       await sendVote(item_id, false);
-      
+
       localStorage.setItem(`vote-${item_id}`, "down");
       setUserVoteState("down");
     } catch (error) {
@@ -112,22 +113,28 @@ export default function LeaderboardItem({
             <div className="flex items-center gap-3">
               {/* Vote Buttons */}
               <div className="flex flex-col items-center text-gray-600 w-8">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={`h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200 ${
-                    userVoteState === "up" ? "text-green-600" : ""
-                  }`}
-                  onClick={handleUpvote}
-                  disabled={isUpvoteLoading || userVoteState === "up"}
-                  aria-label="Upvote"
+                <CoolMode
+                  options={{
+                    particle: "/doge-black.png",
+                  }}
                 >
-                  <ChevronUp
-                    className={`h-3 w-3 md:h-4 md:w-4 ${
-                      isUpvoteLoading ? "opacity-50" : ""
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200 ${
+                      userVoteState === "up" ? "text-green-600" : ""
                     }`}
-                  />
-                </Button>
+                    onClick={handleUpvote}
+                    disabled={isUpvoteLoading || userVoteState === "up"}
+                    aria-label="Upvote"
+                  >
+                    <ChevronUp
+                      className={`h-3 w-3 md:h-4 md:w-4 ${
+                        isUpvoteLoading ? "opacity-50" : ""
+                      }`}
+                    />
+                  </Button>
+                </CoolMode>
                 <span className="text-xs md:text-sm font-medium min-w-[0.5rem] text-center">
                   {optimisticVotes}
                 </span>
