@@ -1,8 +1,6 @@
 import { cn } from "@/lib/utils";
-import AnimatedGradientText from "@/components/ui/animated-gradient-text";
 import GridPattern from "@/components/ui/grid-pattern";
 import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
-
 
 export default function Hero() {
   return (
@@ -12,7 +10,7 @@ export default function Hero() {
           See Where Your Tax Dollars Go
         </h2>
         <p className="text-lg text-muted-foreground text-center">
-          Let's keep the government accountable.
+          Let&apos;s keep the government accountable.
         </p>
       </div>
       <GridPattern

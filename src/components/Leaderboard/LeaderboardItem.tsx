@@ -75,6 +75,7 @@ export default function LeaderboardItem({
       localStorage.setItem(`vote-${item_id}`, "up");
       setUserVoteState("up");
     } catch (error) {
+      console.log("Handle upvote error", error);
       setOptimisticVotes(optimisticVotes);
     } finally {
       setIsUpvoteLoading(false);
@@ -95,6 +96,7 @@ export default function LeaderboardItem({
       localStorage.setItem(`vote-${item_id}`, "down");
       setUserVoteState("down");
     } catch (error) {
+      console.log("Handle downvote error", error);
       setOptimisticVotes(optimisticVotes);
     } finally {
       setIsDownvoteLoading(false);
