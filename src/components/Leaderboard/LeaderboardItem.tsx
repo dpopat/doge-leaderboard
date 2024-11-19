@@ -6,12 +6,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { sendVote } from "./actions";
+import { useOptimistic, useState } from "react";
 
 interface LeaderboardItemProps {
   id: number;
-  votes: number;
+  total_votes: number;
   title: string;
-  year: string;
+  year: number;
   amount: number;
   rank: number;
   isLast?: boolean;
@@ -30,32 +32,98 @@ const formatAmount = (amount: number): string => {
   return amount.toString();
 };
 
-export default function LeaderboardItem({ id, votes, title, year, amount, rank, isLast }: LeaderboardItemProps) {
-  const handleVoteClick = (e: React.MouseEvent) => {
+export default function LeaderboardItem({
+  id,
+  total_votes,
+  title,
+  year,
+  amount,
+  rank,
+  isLast,
+}: LeaderboardItemProps) {
+  const [isUpvoteLoading, setIsUpvoteLoading] = useState(false);
+  const [isDownvoteLoading, setIsDownvoteLoading] = useState(false);
+  const [optimisticVotes, setOptimisticVotes] = useState(total_votes);
+
+  const handleUpvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
+
+    setIsUpvoteLoading(true);
+    try {
+      setOptimisticVotes(optimisticVotes + 1);
+      await sendVote(id, true);
+    } catch (error) {
+      setOptimisticVotes(optimisticVotes);
+    } finally {
+      setIsUpvoteLoading(false);
+    }
+  };
+
+  const handleDownvote = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    setIsDownvoteLoading(true);
+    try {
+      setOptimisticVotes(optimisticVotes - 1);
+      await sendVote(id, false);
+    } catch (error) {
+      setOptimisticVotes(optimisticVotes);
+    } finally {
+      setIsDownvoteLoading(false);
+    }
   };
 
   return (
-    <Card className={`rounded-none ${!isLast ? 'border-b-[0.5px] border-b-black' : ''}`}>
+    <Card
+      className={`rounded-none ${
+        !isLast ? "border-b-[0.5px] border-b-black" : ""
+      }`}
+    >
       <Popover>
         <PopoverTrigger asChild>
           <div className="flex items-center justify-between p-3 hover:bg-accent cursor-pointer">
             <div className="flex items-center gap-3">
               {/* Vote Buttons */}
-              <div className="flex flex-col items-center text-gray-600 w-8" onClick={handleVoteClick}>
-                <Button variant="ghost" size="sm" className="h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200">
-                  <ChevronUp className="h-3 w-3 md:h-4 md:w-4" />
+              <div className="flex flex-col items-center text-gray-600 w-8">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200"
+                  onClick={handleUpvote}
+                  disabled={isUpvoteLoading}
+                  aria-label="Upvote"
+                >
+                  <ChevronUp
+                    className={`h-3 w-3 md:h-4 md:w-4 ${
+                      isUpvoteLoading ? "opacity-50" : ""
+                    }`}
+                  />
                 </Button>
                 <span className="text-xs md:text-sm font-medium min-w-[0.5rem] text-center">
-                  {votes}
+                  {optimisticVotes}
                 </span>
-                <Button variant="ghost" size="sm" className="h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200">
-                  <ChevronDown className="h-3 w-3 md:h-4 md:w-4" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200"
+                  onClick={handleDownvote}
+                  disabled={isDownvoteLoading}
+                  aria-label="Downvote"
+                >
+                  <ChevronDown
+                    className={`h-3 w-3 md:h-4 md:w-4 ${
+                      isDownvoteLoading ? "opacity-50" : ""
+                    }`}
+                  />
                 </Button>
               </div>
               <div className="pr-1">
-                <h3 className="text-sm md:text-lg font-semibold leading-tight">{title}</h3>
-                <p className="text-xs md:text-sm text-muted-foreground">#{rank} • {year}</p>
+                <h3 className="text-sm md:text-lg font-semibold leading-tight">
+                  {title}
+                </h3>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  #{rank} • {year}
+                </p>
               </div>
             </div>
             <div className="text-md md:text-xl font-semibold">
@@ -69,8 +137,8 @@ export default function LeaderboardItem({ id, votes, title, year, amount, rank, 
             <p className="text-sm text-muted-foreground">
               This data was collected from official government spending reports
             </p>
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="text-sm text-blue-500 hover:underline"
               target="_blank"
               rel="noopener noreferrer"
@@ -82,4 +150,4 @@ export default function LeaderboardItem({ id, votes, title, year, amount, rank, 
       </Popover>
     </Card>
   );
-} 
+}

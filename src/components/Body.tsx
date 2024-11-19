@@ -1,7 +1,17 @@
 import Leaderboard from "./Leaderboard/Leaderboard";
 import NumberTicker from "@/components/ui/number-ticker";
+import supabase from "@/utils/supabase/client";
 
-export default function Body() {
+export default async function Body() {
+  const { data, error } = await supabase.from("items_with_total_votes").select();
+
+  if (error) {
+    console.error("Error fetching data:", error);
+    return;
+  }
+
+  const items = data || [];
+
   return (
     <section className="flex-1 px-4">
       <div className="mt-32 space-y-10 max-w-4xl mx-auto">
@@ -28,7 +38,7 @@ export default function Body() {
             Hall Of Fame: American Heroes
           </button>
         </div>
-        <Leaderboard />
+        <Leaderboard items={items} />
       </div>
     </section>
   );
