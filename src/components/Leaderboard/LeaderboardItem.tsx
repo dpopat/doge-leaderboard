@@ -10,7 +10,7 @@ import { sendVote } from "./actions";
 import { useState } from "react";
 
 interface LeaderboardItemProps {
-  id: number;
+  item_id: number;
   total_votes: number;
   title: string;
   year: number;
@@ -37,7 +37,7 @@ const formatAmount = (amount: number): string => {
 };
 
 export default function LeaderboardItem({
-  id,
+  item_id,
   total_votes,
   title,
   year,
@@ -56,7 +56,7 @@ export default function LeaderboardItem({
     setIsUpvoteLoading(true);
     try {
       setOptimisticVotes(optimisticVotes + 1);
-      await sendVote(id, true);
+      await sendVote(item_id, true);
     } catch (error) {
       setOptimisticVotes(optimisticVotes);
     } finally {
@@ -70,7 +70,7 @@ export default function LeaderboardItem({
     setIsDownvoteLoading(true);
     try {
       setOptimisticVotes(optimisticVotes - 1);
-      await sendVote(id, false);
+      await sendVote(item_id, false);
     } catch (error) {
       setOptimisticVotes(optimisticVotes);
     } finally {

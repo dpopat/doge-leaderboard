@@ -66,7 +66,6 @@ export default function Leaderboard({ items }: LeaderboardProps) {
           {sortedData.map((item, index) => (
             <LeaderboardItem
               key={item.item_id}
-              id={item.item_id}
               {...item}
               rank={index + 1}
               isLast={index === sortedData.length - 1}
