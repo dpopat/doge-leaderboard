@@ -7,7 +7,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { sendVote } from "./actions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+type VoteState = "up" | "down" | null;
 
 interface LeaderboardItemProps {
   item_id: number;
@@ -49,14 +51,28 @@ export default function LeaderboardItem({
   const [isUpvoteLoading, setIsUpvoteLoading] = useState(false);
   const [isDownvoteLoading, setIsDownvoteLoading] = useState(false);
   const [optimisticVotes, setOptimisticVotes] = useState(total_votes);
+  const [userVoteState, setUserVoteState] = useState<VoteState>(null);
+
+  useEffect(() => {
+    const savedVote = localStorage.getItem(`vote-${item_id}`);
+    if (savedVote) {
+      setUserVoteState(savedVote as VoteState);
+    }
+  }, [item_id]);
 
   const handleUpvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
+    
+    if (userVoteState === "up") return;
 
     setIsUpvoteLoading(true);
     try {
-      setOptimisticVotes(optimisticVotes + 1);
+      const voteChange = userVoteState === "down" ? 2 : 1;
+      setOptimisticVotes(optimisticVotes + voteChange);
       await sendVote(item_id, true);
+      
+      localStorage.setItem(`vote-${item_id}`, "up");
+      setUserVoteState("up");
     } catch (error) {
       setOptimisticVotes(optimisticVotes);
     } finally {
@@ -66,11 +82,17 @@ export default function LeaderboardItem({
 
   const handleDownvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
+    
+    if (userVoteState === "down") return;
 
     setIsDownvoteLoading(true);
     try {
-      setOptimisticVotes(optimisticVotes - 1);
+      const voteChange = userVoteState === "up" ? 2 : 1;
+      setOptimisticVotes(optimisticVotes - voteChange);
       await sendVote(item_id, false);
+      
+      localStorage.setItem(`vote-${item_id}`, "down");
+      setUserVoteState("down");
     } catch (error) {
       setOptimisticVotes(optimisticVotes);
     } finally {
@@ -93,9 +115,11 @@ export default function LeaderboardItem({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200"
+                  className={`h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200 ${
+                    userVoteState === "up" ? "text-green-600" : ""
+                  }`}
                   onClick={handleUpvote}
-                  disabled={isUpvoteLoading}
+                  disabled={isUpvoteLoading || userVoteState === "up"}
                   aria-label="Upvote"
                 >
                   <ChevronUp
@@ -110,9 +134,11 @@ export default function LeaderboardItem({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200"
+                  className={`h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200 ${
+                    userVoteState === "down" ? "text-red-600" : ""
+                  }`}
                   onClick={handleDownvote}
-                  disabled={isDownvoteLoading}
+                  disabled={isDownvoteLoading || userVoteState === "down"}
                   aria-label="Downvote"
                 >
                   <ChevronDown
