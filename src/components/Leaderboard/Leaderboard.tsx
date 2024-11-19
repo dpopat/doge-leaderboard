@@ -20,6 +20,10 @@ interface LeaderboardProps {
     title: string;
     year: number;
     amount: number;
+    sources: Array<{
+      link: string;
+      name: string;
+    }>;
   }[];
 }
 
@@ -38,7 +42,6 @@ export default function Leaderboard({ items }: LeaderboardProps) {
         return 0;
     }
   });
-  console.log(sortedData);
 
   return (
     <div className="max-w-4xl mx-auto">

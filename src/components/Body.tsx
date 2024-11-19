@@ -3,7 +3,7 @@ import NumberTicker from "@/components/ui/number-ticker";
 import supabase from "@/utils/supabase/client";
 
 export default async function Body() {
-  const { data, error } = await supabase.from("items_with_total_votes").select();
+  const { data, error } = await supabase.from("items_with_total_votes").select("*");
 
   if (error) {
     console.error("Error fetching data:", error);

@@ -7,7 +7,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { sendVote } from "./actions";
-import { useOptimistic, useState } from "react";
+import { useState } from "react";
 
 interface LeaderboardItemProps {
   id: number;
@@ -16,6 +16,10 @@ interface LeaderboardItemProps {
   year: number;
   amount: number;
   rank: number;
+  sources: Array<{
+    link: string;
+    name: string;
+  }>;
   isLast?: boolean;
 }
 
@@ -40,6 +44,7 @@ export default function LeaderboardItem({
   amount,
   rank,
   isLast,
+  sources,
 }: LeaderboardItemProps) {
   const [isUpvoteLoading, setIsUpvoteLoading] = useState(false);
   const [isDownvoteLoading, setIsDownvoteLoading] = useState(false);
@@ -133,18 +138,22 @@ export default function LeaderboardItem({
         </PopoverTrigger>
         <PopoverContent className="w-80">
           <div className="space-y-2">
-            <h4 className="font-semibold">Source</h4>
-            <p className="text-sm text-muted-foreground">
-              This data was collected from official government spending reports
-            </p>
-            <a
-              href="#"
-              className="text-sm text-blue-500 hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Official Report →
-            </a>
+            <h4 className="font-semibold">Sources</h4>
+            <ul className="list-disc pl-4 space-y-1.5">
+              {sources?.map((source, index) => (
+                <li key={`${source.name}-${index}`}>
+                  <a
+                    href={source.link}
+                    className="text-sm text-blue-500 hover:underline inline-flex items-center gap-1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {source.name}
+                    <span className="inline-block translate-y-[1px]">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </PopoverContent>
       </Popover>
