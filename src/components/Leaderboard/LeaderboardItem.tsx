@@ -142,6 +142,7 @@ export default function LeaderboardItem({
                   options={{
                     particle: "/doge-black.png",
                   }}
+                  enabled={userVoteState !== "up"}
                 >
                   <Button
                     variant="ghost"

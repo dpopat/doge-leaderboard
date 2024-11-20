@@ -223,16 +223,21 @@ const applyParticleEffect = (
 interface CoolModeProps {
   children: ReactNode;
   options?: CoolParticleOptions;
+  enabled?: boolean;
 }
 
-export const CoolMode: React.FC<CoolModeProps> = ({ children, options }) => {
+export const CoolMode: React.FC<CoolModeProps> = ({ 
+  children, 
+  options,
+  enabled = true // Default to true if not specified
+}) => {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref.current && enabled) {
       return applyParticleEffect(ref.current, options);
     }
-  }, [options]);
+  }, [options, enabled]);
 
   return React.cloneElement(children as React.ReactElement, { ref });
 };
