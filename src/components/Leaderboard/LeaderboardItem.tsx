@@ -51,7 +51,7 @@ export default function LeaderboardItem({
 }: LeaderboardItemProps) {
   const [isUpvoteLoading, setIsUpvoteLoading] = useState(false);
   const [isDownvoteLoading, setIsDownvoteLoading] = useState(false);
-  const [optimisticVotes, setOptimisticVotes] = useState(total_votes);
+  const [optimisticVotesCount, setOptimisticVotesCount] = useState(total_votes);
   const [userVoteState, setUserVoteState] = useState<VoteState>(null);
 
   useEffect(() => {
@@ -61,38 +61,39 @@ export default function LeaderboardItem({
     }
   }, [item_id]);
 
+  const handleVoteError = () => {
+    setOptimisticVotesCount(optimisticVotesCount);
+    setUserVoteState(userVoteState);
+    if (userVoteState) {
+      localStorage.setItem(`vote-${item_id}`, userVoteState);
+    } else {
+      localStorage.removeItem(`vote-${item_id}`);
+    }
+  };
+
   const handleUpvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
-
     setIsUpvoteLoading(true);
-    const previousVotes = optimisticVotes;
-    const previousVoteState = userVoteState;
     
     try {
       if (userVoteState === "up") {
         // Remove upvote
-        setOptimisticVotes(optimisticVotes - 1);
+        setOptimisticVotesCount(optimisticVotesCount - 1);
         setUserVoteState(null);
         localStorage.removeItem(`vote-${item_id}`);
         await removeVote(item_id, true);
       } else {
         // Add upvote
         const voteChange = userVoteState === "down" ? 2 : 1;
-        setOptimisticVotes(optimisticVotes + voteChange);
+        setOptimisticVotesCount(optimisticVotesCount + voteChange);
         setUserVoteState("up");
         localStorage.setItem(`vote-${item_id}`, "up");
         await addVote(item_id, true);
       }
     } catch (error) {
-      // Always revert on any error
+      // Revert to previous state
       console.log("Handle upvote error", error);
-      setOptimisticVotes(previousVotes);
-      setUserVoteState(previousVoteState);
-      if (previousVoteState) {
-        localStorage.setItem(`vote-${item_id}`, previousVoteState);
-      } else {
-        localStorage.removeItem(`vote-${item_id}`);
-      }
+      handleVoteError();
     } finally {
       setIsUpvoteLoading(false);
     }
@@ -100,36 +101,27 @@ export default function LeaderboardItem({
 
   const handleDownvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
-
     setIsDownvoteLoading(true);
-    const previousVotes = optimisticVotes;
-    const previousVoteState = userVoteState;
     
     try {
       if (userVoteState === "down") {
         // Remove downvote
-        setOptimisticVotes(optimisticVotes + 1);
+        setOptimisticVotesCount(optimisticVotesCount + 1);
         setUserVoteState(null);
         localStorage.removeItem(`vote-${item_id}`);
         await removeVote(item_id, false);
       } else {
         // Add downvote
         const voteChange = userVoteState === "up" ? 2 : 1;
-        setOptimisticVotes(optimisticVotes - voteChange);
+        setOptimisticVotesCount(optimisticVotesCount - voteChange);
         setUserVoteState("down");
         localStorage.setItem(`vote-${item_id}`, "down");
         await addVote(item_id, false);
       }
     } catch (error) {
-      // Always revert on any error
+      // Revert to previous state
       console.log("Handle downvote error", error);
-      setOptimisticVotes(previousVotes);
-      setUserVoteState(previousVoteState);
-      if (previousVoteState) {
-        localStorage.setItem(`vote-${item_id}`, previousVoteState);
-      } else {
-        localStorage.removeItem(`vote-${item_id}`);
-      }
+      handleVoteError();
     } finally {
       setIsDownvoteLoading(false);
     }
@@ -169,7 +161,7 @@ export default function LeaderboardItem({
                   </Button>
                 </CoolMode>
                 <span className="text-xs md:text-sm font-medium min-w-[0.5rem] text-center">
-                  {optimisticVotes}
+                  {optimisticVotesCount}
                 </span>
                 <Button
                   variant="ghost"
