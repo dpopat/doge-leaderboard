@@ -67,7 +67,7 @@ export default function Leaderboard({ items }: LeaderboardProps) {
 
         <Button
           onClick={handleSurveyClick}
-          className="rounded-none border-[0.5px] border-gray-300 bg-white text-black font-semibold hover:bg-gray-100 hover:text-black"
+          className="rounded-none border-[0.5px] border-gray-300 bg-white text-black font-semibold hover:bg-gray-100 hover:text-black shadow-sm"
           aria-label="Submit survey"
         >
           <span className="">Contribute</span>
