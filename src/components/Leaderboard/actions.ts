@@ -9,6 +9,12 @@ const voteSchema = z.object({
   is_upvote: z.boolean()
 });
 
+const updateVoteSchema = z.object({
+  item_id: z.number().int().positive(),
+  curr_is_up_vote: z.boolean(),
+  new_is_up_vote: z.boolean()
+});
+
 type Vote = {
   id: number;
   item_id: number;
@@ -58,6 +64,45 @@ export async function removeVote(item_id: number, is_upvote: boolean) {
   if (error) {
     console.log("Error removing vote:", error);
     throw new Error("Error removing vote");
+  }
+
+  if (!data || data.length === 0) {
+    throw new Error("No vote found to remove");
+  }
+}
+
+export async function updateVote(
+  item_id: number, 
+  curr_is_up_vote: boolean, 
+  new_is_up_vote: boolean
+) {
+  // Validate input data
+  const validationResult = updateVoteSchema.safeParse({ 
+    item_id, 
+    curr_is_up_vote, 
+    new_is_up_vote 
+  });
+  
+  if (!validationResult.success) {
+    console.log("Validation error:", validationResult.error);
+    throw new Error("Invalid vote update data");
+  }
+
+  const supabase = await createClient();
+
+  // Update the vote
+  const { data, error: updateError } = await supabase
+    .from("Votes")
+    .update({ is_upvote: new_is_up_vote })
+    .eq('item_id', item_id)
+    .eq('is_upvote', curr_is_up_vote)
+    .order('id', { ascending: true })
+    .limit(1)
+    .select<"*", Vote>();
+
+  if (updateError) {
+    console.log("Error updating vote:", updateError);
+    throw new Error("Error updating vote");
   }
 
   if (!data || data.length === 0) {
