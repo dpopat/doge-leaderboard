@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import ShineBorder from "@/components/ui/shine-border";
 
 type SortOption = "votes" | "amount" | "year";
@@ -30,6 +31,10 @@ interface LeaderboardProps {
 export default function Leaderboard({ items }: LeaderboardProps) {
   const [sortBy, setSortBy] = useState<SortOption>("amount");
 
+  const handleSurveyClick = () => {
+    window.open("https://x.com/dogeleaderboard", "_blank");
+  };
+
   const sortedData = [...items].sort((a, b) => {
     switch (sortBy) {
       case "votes":
@@ -45,7 +50,7 @@ export default function Leaderboard({ items }: LeaderboardProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="flex justify-start mb-4 items-center font-semibold">
+      <div className="flex justify-between mb-4 items-center font-semibold">
         <Select
           value={sortBy}
           onValueChange={(value: SortOption) => setSortBy(value)}
@@ -59,6 +64,14 @@ export default function Leaderboard({ items }: LeaderboardProps) {
             <SelectItem value="year">Year</SelectItem>
           </SelectContent>
         </Select>
+
+        <Button
+          onClick={handleSurveyClick}
+          className="rounded-none border-[0.5px] border-gray-300 bg-white text-black font-semibold hover:bg-gray-100 hover:text-black"
+          aria-label="Submit survey"
+        >
+          <span className="">Contribute</span>
+        </Button>
       </div>
 
       <ShineBorder borderRadius={0} borderWidth={1.5} color={["#d19e00", "#a67102"]}>
