@@ -135,8 +135,8 @@ export default function LeaderboardItem({
     >
       <Popover>
         <PopoverTrigger asChild>
-          <div className="flex items-center justify-between p-3 hover:bg-accent cursor-pointer">
-            <div className="w-24 md:w-24 flex-shrink-0 font-semibold text-md md:text-xl flex items-center justify-center">
+          <div className="flex items-center justify-between p-2 md:p-3 hover:bg-accent cursor-pointer">
+            <div className="w-14 md:w-24 flex-shrink-0 font-semibold text-sm md:text-xl flex items-center justify-center">
               ${formatAmount(amount)}
             </div>
             <div className="flex-grow pl-2">
@@ -156,7 +156,7 @@ export default function LeaderboardItem({
               >
                 <button
                   type="button"
-                  className={`flex items-center justify-center h-4 w-4 md:h-6 md:w-7 rounded-md hover:bg-gray-200 ${
+                  className={`flex items-center justify-center h-5 w-6 md:h-6 md:w-7 rounded-md hover:bg-gray-200 ${
                     userVoteState === "up" ? "text-green-600" : ""
                   }`}
                   onClick={handleUpvote}
@@ -164,7 +164,7 @@ export default function LeaderboardItem({
                   aria-label="Upvote"
                 >
                   <ChevronUp
-                    className={`h-3 w-3 md:h-5 md:w-5 ${
+                    className={`h-4 w-4 md:h-5 md:w-5 ${
                       isUpvoteLoading ? "opacity-50" : ""
                     }`}
                   />
@@ -175,7 +175,7 @@ export default function LeaderboardItem({
               </span>
               <button
                 type="button"
-                className={`flex items-center justify-center h-4 w-4 md:h-6 md:w-7 rounded-md hover:bg-gray-200 ${
+                className={`flex items-center justify-center h-5 w-6 md:h-6 md:w-7 rounded-md hover:bg-gray-200 ${
                   userVoteState === "down" ? "text-red-600" : ""
                 }`}
                 onClick={handleDownvote}
@@ -183,7 +183,7 @@ export default function LeaderboardItem({
                 aria-label="Downvote"
               >
                 <ChevronDown
-                  className={`h-3 w-3 md:h-5 md:w-5 ${
+                  className={`h-4 w-4 md:h-5 md:w-5 ${
                     isDownvoteLoading ? "opacity-50" : ""
                   }`}
                 />

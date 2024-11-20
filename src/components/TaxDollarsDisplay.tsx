@@ -12,7 +12,7 @@ const TaxDollarsDisplay = ({ value }: TaxDollarsDisplayProps) => {
         particle: "/doge-black.png",
       }}>
       <div className="text-center">
-        <p className="text-5xl md:text-7xl font-semibold">
+        <p className="text-6xl md:text-7xl font-semibold">
           $<NumberTicker value={value} className="tracking-tight"/>M
         </p>
         <p className="text-sm md:text-lg font-medium text-muted-foreground">
