@@ -1,6 +1,12 @@
 import Leaderboard from "./Leaderboard/Leaderboard";
 import supabase from "@/utils/supabase/client";
 import TaxDollarsDisplay from "@/components/TaxDollarsDisplay";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export const revalidate = 600; // Revalidate every 10 minutes (600 seconds)
 
@@ -26,14 +32,23 @@ export default async function Body() {
           >
             Hall Of Shame: Squanderers
           </button>
-          <button
-            className="w-1/2 rounded-none border-2 border-l-0 px-3 py-3 bg-gray-100 text-gray-400  cursor-not-allowed"
-            aria-label="View Hall of Fame"
-            aria-pressed="false"
-            disabled
-          >
-            Hall Of Fame: American Heroes
-          </button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  className="w-1/2 rounded-none border-2 border-l-0 px-3 py-3 bg-gray-100 text-gray-400"
+                  aria-label="View Hall of Fame"
+                  aria-pressed="false"
+                  disabled
+                >
+                  Hall Of Fame: American Heroes
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-sm">Coming Soon!</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <Leaderboard items={items} />
       </div>
