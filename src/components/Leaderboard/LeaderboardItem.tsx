@@ -136,62 +136,58 @@ export default function LeaderboardItem({
       <Popover>
         <PopoverTrigger asChild>
           <div className="flex items-center justify-between p-3 hover:bg-accent cursor-pointer">
-            <div className="flex items-center gap-3">
-              <div className="flex flex-col items-center text-gray-600 w-8">
-                <CoolMode
-                  options={{
-                    particle: "/doge-black.png",
-                  }}
-                  enabled={userVoteState !== "up"}
-                >
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200 ${
-                      userVoteState === "up" ? "text-green-600" : ""
-                    }`}
-                    onClick={handleUpvote}
-                    disabled={isUpvoteLoading}
-                    aria-label="Upvote"
-                  >
-                    <ChevronUp
-                      className={`h-3 w-3 md:h-4 md:w-4 ${
-                        isUpvoteLoading ? "opacity-50" : ""
-                      }`}
-                    />
-                  </Button>
-                </CoolMode>
-                <span className="text-xs md:text-sm font-medium min-w-[0.5rem] text-center">
-                  {optimisticVotesCount}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={`h-4 w-4 md:h-6 md:w-6 hover:bg-gray-200 ${
-                    userVoteState === "down" ? "text-red-600" : ""
+            <div className="w-24 md:w-24 flex-shrink-0 font-semibold text-md md:text-xl flex items-center justify-center">
+              ${formatAmount(amount)}
+            </div>
+            <div className="flex-grow pl-2">
+              <h3 className="text-sm md:text-lg font-semibold leading-tight">
+                {title}
+              </h3>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                #{rank} • {year}
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-gray-600 w-8 flex-shrink-0">
+              <CoolMode
+                options={{
+                  particle: "/doge-black.png",
+                }}
+                enabled={userVoteState !== "up"}
+              >
+                <button
+                  type="button"
+                  className={`flex items-center justify-center h-4 w-4 md:h-6 md:w-7 rounded-md hover:bg-gray-200 ${
+                    userVoteState === "up" ? "text-green-600" : ""
                   }`}
-                  onClick={handleDownvote}
-                  disabled={isDownvoteLoading}
-                  aria-label="Downvote"
+                  onClick={handleUpvote}
+                  disabled={isUpvoteLoading}
+                  aria-label="Upvote"
                 >
-                  <ChevronDown
-                    className={`h-3 w-3 md:h-4 md:w-4 ${
-                      isDownvoteLoading ? "opacity-50" : ""
+                  <ChevronUp
+                    className={`h-3 w-3 md:h-5 md:w-5 ${
+                      isUpvoteLoading ? "opacity-50" : ""
                     }`}
                   />
-                </Button>
-              </div>
-              <div className="pr-1">
-                <h3 className="text-sm md:text-lg font-semibold leading-tight">
-                  {title}
-                </h3>
-                <p className="text-xs md:text-sm text-muted-foreground">
-                  #{rank} • {year}
-                </p>
-              </div>
-            </div>
-            <div className="text-md md:text-xl font-semibold">
-              ${formatAmount(amount)}
+                </button>
+              </CoolMode>
+              <span className="text-xs md:text-sm font-medium min-w-[0.5rem] text-center">
+                {optimisticVotesCount}
+              </span>
+              <button
+                type="button"
+                className={`flex items-center justify-center h-4 w-4 md:h-6 md:w-7 rounded-md hover:bg-gray-200 ${
+                  userVoteState === "down" ? "text-red-600" : ""
+                }`}
+                onClick={handleDownvote}
+                disabled={isDownvoteLoading}
+                aria-label="Downvote"
+              >
+                <ChevronDown
+                  className={`h-3 w-3 md:h-5 md:w-5 ${
+                    isDownvoteLoading ? "opacity-50" : ""
+                  }`}
+                />
+              </button>
             </div>
           </div>
         </PopoverTrigger>
