@@ -135,7 +135,7 @@ export default function LeaderboardItem({
     >
       <Popover>
         <PopoverTrigger asChild>
-          <div className="flex items-center justify-between p-2 md:p-3 hover:bg-accent cursor-pointer">
+          <div className="flex items-center justify-between p-2 md:p-3 [@media(hover:hover)]:hover:bg-accent cursor-pointer">
             <div className="w-14 md:w-24 flex-shrink-0 font-semibold text-sm md:text-xl flex items-center justify-center">
               ${formatAmount(amount)}
             </div>
