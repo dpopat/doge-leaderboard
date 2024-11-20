@@ -22,7 +22,7 @@ export default async function Body() {
 
   return (
     <section className="flex-1 px-4">
-      <div className="mt-32 space-y-10 max-w-4xl mx-auto">
+      <div className="my-32 space-y-10 max-w-4xl mx-auto">
         <div className="flex justify-center">
           <TaxDollarsDisplay value={300} />
         </div>
