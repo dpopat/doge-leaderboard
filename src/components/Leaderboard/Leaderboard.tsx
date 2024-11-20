@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import ShineBorder from "@/components/ui/shine-border";
 
-type SortOption = "votes" | "amount" | "recent";
+type SortOption = "votes" | "amount" | "year";
 
 interface LeaderboardProps {
   items: {
@@ -36,8 +36,8 @@ export default function Leaderboard({ items }: LeaderboardProps) {
         return b.total_votes - a.total_votes;
       case "amount":
         return b.amount - a.amount;
-      case "recent":
-        return b.item_id- a.item_id;
+      case "year":
+        return b.year - a.year;
       default:
         return 0;
     }
@@ -45,7 +45,7 @@ export default function Leaderboard({ items }: LeaderboardProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="flex justify-end mb-4 items-center font-semibold">
+      <div className="flex justify-start mb-4 items-center font-semibold">
         <Select
           value={sortBy}
           onValueChange={(value: SortOption) => setSortBy(value)}
@@ -56,7 +56,7 @@ export default function Leaderboard({ items }: LeaderboardProps) {
           <SelectContent className="border-[0.5px] border-gray-600 rounded-none">
             <SelectItem value="votes">Most Votes</SelectItem>
             <SelectItem value="amount">Highest Amount</SelectItem>
-            <SelectItem value="recent">Most Recent</SelectItem>
+            <SelectItem value="year">Year</SelectItem>
           </SelectContent>
         </Select>
       </div>
