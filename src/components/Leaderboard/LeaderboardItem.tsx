@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { addVote, removeVote } from "@/components/Leaderboard/actions";
+import { addVote, removeVote, updateVote } from "@/components/Leaderboard/actions";
 import { useState, useEffect } from "react";
 import { CoolMode } from "../ui/cool-mode";
 
@@ -81,10 +81,15 @@ export default function LeaderboardItem({
         setUserVoteState(null);
         localStorage.removeItem(`vote-${item_id}`);
         await removeVote(item_id, true);
+      } else if (userVoteState === "down") {
+        // Switch from downvote to upvote
+        setOptimisticVotesCount(optimisticVotesCount + 2);
+        setUserVoteState("up");
+        localStorage.setItem(`vote-${item_id}`, "up");
+        await updateVote(item_id, false, true);
       } else {
-        // Add upvote
-        const voteChange = userVoteState === "down" ? 2 : 1;
-        setOptimisticVotesCount(optimisticVotesCount + voteChange);
+        // Add new upvote
+        setOptimisticVotesCount(optimisticVotesCount + 1);
         setUserVoteState("up");
         localStorage.setItem(`vote-${item_id}`, "up");
         await addVote(item_id, true);
@@ -109,10 +114,15 @@ export default function LeaderboardItem({
         setUserVoteState(null);
         localStorage.removeItem(`vote-${item_id}`);
         await removeVote(item_id, false);
+      } else if (userVoteState === "up") {
+        // Switch from upvote to downvote
+        setOptimisticVotesCount(optimisticVotesCount - 2);
+        setUserVoteState("down");
+        localStorage.setItem(`vote-${item_id}`, "down");
+        await updateVote(item_id, true, false);
       } else {
-        // Add downvote
-        const voteChange = userVoteState === "up" ? 2 : 1;
-        setOptimisticVotesCount(optimisticVotesCount - voteChange);
+        // Add new downvote
+        setOptimisticVotesCount(optimisticVotesCount - 1);
         setUserVoteState("down");
         localStorage.setItem(`vote-${item_id}`, "down");
         await addVote(item_id, false);
