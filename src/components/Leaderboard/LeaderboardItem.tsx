@@ -163,6 +163,7 @@ export default function LeaderboardItem({
                   aria-label="Upvote"
                 >
                   <ChevronUp
+                  strokeWidth={userVoteState === "up" ? 3 : 2}
                     className={`h-4 w-4 md:h-5 md:w-5 ${
                       isUpvoteLoading ? "opacity-50" : ""
                     }`}
@@ -182,6 +183,7 @@ export default function LeaderboardItem({
                 aria-label="Downvote"
               >
                 <ChevronDown
+                strokeWidth={userVoteState === "down" ? 3 : 2}
                   className={`h-4 w-4 md:h-5 md:w-5 ${
                     isDownvoteLoading ? "opacity-50" : ""
                   }`}
