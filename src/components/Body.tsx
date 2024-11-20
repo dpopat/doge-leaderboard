@@ -23,7 +23,9 @@ export default async function Body() {
   return (
     <section className="flex-1 px-4">
       <div className="mt-32 space-y-10 max-w-4xl mx-auto">
-        <TaxDollarsDisplay value={300} />
+        <div className="flex justify-center">
+          <TaxDollarsDisplay value={300} />
+        </div>
         <div className="flex justify-center text-sm md:text-lg font-semibold text-gray-800 max-w-5xl mx-auto w-full">
           <button
             className="w-1/2 rounded-none border-2 border-r-0 px-3 py-3 bg-gray-800 text-white"
