@@ -1,6 +1,6 @@
 import Leaderboard from "./Leaderboard/Leaderboard";
-import NumberTicker from "@/components/ui/number-ticker";
 import supabase from "@/utils/supabase/client";
+import TaxDollarsDisplay from "@/components/TaxDollarsDisplay";
 
 export const revalidate = 600; // Revalidate every 10 minutes (600 seconds)
 
@@ -17,12 +17,7 @@ export default async function Body() {
   return (
     <section className="flex-1 px-4">
       <div className="mt-32 space-y-10 max-w-4xl mx-auto">
-        <div className="text-center">
-          <p className="text-5xl md:text-7xl font-semibold">
-            $<NumberTicker value={300} className="tracking-tight"/>M
-          </p>
-          <p className="text-sm md:text-lg font-medium text-muted-foreground">Tax Dollars Wasted in 2023</p>
-        </div>
+        <TaxDollarsDisplay value={300} />
         <div className="flex justify-center text-sm md:text-lg font-semibold text-gray-800 max-w-5xl mx-auto w-full">
           <button
             className="w-1/2 rounded-none border-2 border-r-0 px-3 py-3 bg-gray-800 text-white"
