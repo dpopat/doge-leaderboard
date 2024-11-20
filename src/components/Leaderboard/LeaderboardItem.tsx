@@ -6,7 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { sendVote } from "./actions";
+import { addVote, removeVote } from "./actions";
 import { useState, useEffect } from "react";
 import { CoolMode } from "../ui/cool-mode";
 
@@ -64,19 +64,35 @@ export default function LeaderboardItem({
   const handleUpvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    if (userVoteState === "up") return;
-
     setIsUpvoteLoading(true);
+    const previousVotes = optimisticVotes;
+    const previousVoteState = userVoteState;
+    
     try {
-      const voteChange = userVoteState === "down" ? 2 : 1;
-      setOptimisticVotes(optimisticVotes + voteChange);
-      await sendVote(item_id, true);
-
-      localStorage.setItem(`vote-${item_id}`, "up");
-      setUserVoteState("up");
+      if (userVoteState === "up") {
+        // Remove upvote
+        setOptimisticVotes(optimisticVotes - 1);
+        setUserVoteState(null);
+        localStorage.removeItem(`vote-${item_id}`);
+        await removeVote(item_id, true);
+      } else {
+        // Add upvote
+        const voteChange = userVoteState === "down" ? 2 : 1;
+        setOptimisticVotes(optimisticVotes + voteChange);
+        setUserVoteState("up");
+        localStorage.setItem(`vote-${item_id}`, "up");
+        await addVote(item_id, true);
+      }
     } catch (error) {
+      // Always revert on any error
       console.log("Handle upvote error", error);
-      setOptimisticVotes(optimisticVotes);
+      setOptimisticVotes(previousVotes);
+      setUserVoteState(previousVoteState);
+      if (previousVoteState) {
+        localStorage.setItem(`vote-${item_id}`, previousVoteState);
+      } else {
+        localStorage.removeItem(`vote-${item_id}`);
+      }
     } finally {
       setIsUpvoteLoading(false);
     }
@@ -85,19 +101,35 @@ export default function LeaderboardItem({
   const handleDownvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    if (userVoteState === "down") return;
-
     setIsDownvoteLoading(true);
+    const previousVotes = optimisticVotes;
+    const previousVoteState = userVoteState;
+    
     try {
-      const voteChange = userVoteState === "up" ? 2 : 1;
-      setOptimisticVotes(optimisticVotes - voteChange);
-      await sendVote(item_id, false);
-
-      localStorage.setItem(`vote-${item_id}`, "down");
-      setUserVoteState("down");
+      if (userVoteState === "down") {
+        // Remove downvote
+        setOptimisticVotes(optimisticVotes + 1);
+        setUserVoteState(null);
+        localStorage.removeItem(`vote-${item_id}`);
+        await removeVote(item_id, false);
+      } else {
+        // Add downvote
+        const voteChange = userVoteState === "up" ? 2 : 1;
+        setOptimisticVotes(optimisticVotes - voteChange);
+        setUserVoteState("down");
+        localStorage.setItem(`vote-${item_id}`, "down");
+        await addVote(item_id, false);
+      }
     } catch (error) {
+      // Always revert on any error
       console.log("Handle downvote error", error);
-      setOptimisticVotes(optimisticVotes);
+      setOptimisticVotes(previousVotes);
+      setUserVoteState(previousVoteState);
+      if (previousVoteState) {
+        localStorage.setItem(`vote-${item_id}`, previousVoteState);
+      } else {
+        localStorage.removeItem(`vote-${item_id}`);
+      }
     } finally {
       setIsDownvoteLoading(false);
     }
@@ -113,7 +145,6 @@ export default function LeaderboardItem({
         <PopoverTrigger asChild>
           <div className="flex items-center justify-between p-3 hover:bg-accent cursor-pointer">
             <div className="flex items-center gap-3">
-              {/* Vote Buttons */}
               <div className="flex flex-col items-center text-gray-600 w-8">
                 <CoolMode
                   options={{
@@ -127,7 +158,7 @@ export default function LeaderboardItem({
                       userVoteState === "up" ? "text-green-600" : ""
                     }`}
                     onClick={handleUpvote}
-                    disabled={isUpvoteLoading || userVoteState === "up"}
+                    disabled={isUpvoteLoading}
                     aria-label="Upvote"
                   >
                     <ChevronUp
@@ -147,7 +178,7 @@ export default function LeaderboardItem({
                     userVoteState === "down" ? "text-red-600" : ""
                   }`}
                   onClick={handleDownvote}
-                  disabled={isDownvoteLoading || userVoteState === "down"}
+                  disabled={isDownvoteLoading}
                   aria-label="Downvote"
                 >
                   <ChevronDown
