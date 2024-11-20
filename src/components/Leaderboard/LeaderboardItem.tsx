@@ -6,7 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { addVote, removeVote } from "./actions";
+import { addVote, removeVote } from "@/components/Leaderboard/actions";
 import { useState, useEffect } from "react";
 import { CoolMode } from "../ui/cool-mode";
 
