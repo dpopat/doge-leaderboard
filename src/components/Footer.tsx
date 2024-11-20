@@ -14,7 +14,7 @@ const Footer = () => {
     },
     {
       icon: <FaTiktok className="w-6 h-6" />,
-      href: "https://tiktok.com/dogeleaderboard",
+      href: "https://tiktok.com/@dogeleaderboard",
       label: "Follow us on TikTok",
     },
   ];
