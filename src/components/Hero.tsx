@@ -4,7 +4,7 @@ import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
 
 export default function Hero() {
   return (
-    <section className="relative flex flex-col items-center justify-between flex-1 min-h-[85vh]">
+    <section className="relative flex flex-col items-center justify-between flex-1 min-h-[80vh] md:min-h-[85vh]">
       <div className="flex flex-col items-center gap-2 mx-3 mt-[30vh]">
         <h2 className="text-5xl md:text-6xl font-bold text-center tracking-tighter">
           See Where Your Tax Dollars Go
