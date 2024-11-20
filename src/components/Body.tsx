@@ -2,6 +2,8 @@ import Leaderboard from "./Leaderboard/Leaderboard";
 import NumberTicker from "@/components/ui/number-ticker";
 import supabase from "@/utils/supabase/client";
 
+export const revalidate = 600; // Revalidate every 10 minutes (600 seconds)
+
 export default async function Body() {
   const { data, error } = await supabase.from("items_with_total_votes").select("*");
 
