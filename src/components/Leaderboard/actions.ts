@@ -1,6 +1,13 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { z } from "zod";
+
+// Define validation schemas
+const voteSchema = z.object({
+  item_id: z.number().int().positive(),
+  is_upvote: z.boolean()
+});
 
 type Vote = {
   id: number;
@@ -10,6 +17,14 @@ type Vote = {
 };
 
 export async function addVote(item_id: number, is_upvote: boolean) {
+  // Validate input data
+  const validationResult = voteSchema.safeParse({ item_id, is_upvote });
+  
+  if (!validationResult.success) {
+    console.log("Validation error:", validationResult.error);
+    throw new Error("Invalid vote data");
+  }
+
   const supabase = await createClient();
   const { error } = await supabase
     .from("Votes")
@@ -22,6 +37,14 @@ export async function addVote(item_id: number, is_upvote: boolean) {
 }
 
 export async function removeVote(item_id: number, is_upvote: boolean) {
+  // Validate input data
+  const validationResult = voteSchema.safeParse({ item_id, is_upvote });
+  
+  if (!validationResult.success) {
+    console.log("Validation error:", validationResult.error);
+    throw new Error("Invalid vote data");
+  }
+
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("Votes")
