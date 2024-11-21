@@ -60,7 +60,7 @@ export default function Leaderboard({ items }: LeaderboardProps) {
           </SelectTrigger>
           <SelectContent className="border-[0.5px] border-gray-600 rounded-none">
             <SelectItem value="votes">Most Votes</SelectItem>
-            <SelectItem value="amount">Highest Amount</SelectItem>
+            <SelectItem value="amount">Dollars Wasted</SelectItem>
             <SelectItem value="year">Year</SelectItem>
           </SelectContent>
         </Select>
