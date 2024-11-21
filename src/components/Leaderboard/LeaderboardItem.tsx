@@ -5,7 +5,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { addVote, removeVote, updateVote } from "@/components/Leaderboard/actions";
+import {
+  addVote,
+  removeVote,
+  updateVote,
+} from "@/components/Leaderboard/actions";
 import { useState, useEffect } from "react";
 import { CoolMode } from "../ui/cool-mode";
 
@@ -73,7 +77,7 @@ export default function LeaderboardItem({
   const handleUpvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsUpvoteLoading(true);
-    
+
     try {
       if (userVoteState === "up") {
         // Remove upvote
@@ -106,7 +110,7 @@ export default function LeaderboardItem({
   const handleDownvote = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsDownvoteLoading(true);
-    
+
     try {
       if (userVoteState === "down") {
         // Remove downvote
@@ -145,15 +149,15 @@ export default function LeaderboardItem({
       <Popover>
         <PopoverTrigger asChild>
           <div className="flex items-center justify-between p-2 md:p-3 [@media(hover:hover)]:hover:bg-accent cursor-pointer">
-            <div className="w-14 md:w-24 flex-shrink-0 font-semibold text-sm md:text-xl flex items-center justify-center">
+            <div className="hidden md:flex w-24 flex-shrink-0 font-medium text-xl items-center justify-center">
               ${formatAmount(amount)}
             </div>
             <div className="flex-grow pl-2">
-              <h3 className="text-sm md:text-lg font-semibold leading-tight">
+              <h3 className="text-sm md:text-lg font-semibold	leading-tight">
                 {title}
               </h3>
               <p className="text-xs md:text-sm text-muted-foreground">
-                #{rank} • {year}
+                <span className="md:hidden">${formatAmount(amount)}</span><span className="hidden md:inline">#{rank}</span> • {year}
               </p>
             </div>
             <div className="flex flex-col items-center text-gray-600 w-8 flex-shrink-0">
@@ -173,7 +177,7 @@ export default function LeaderboardItem({
                   aria-label="Upvote"
                 >
                   <ChevronUp
-                  strokeWidth={userVoteState === "up" ? 3 : 2}
+                    strokeWidth={userVoteState === "up" ? 3 : 2}
                     className={`h-4 w-4 md:h-5 md:w-5 ${
                       isUpvoteLoading ? "opacity-50" : ""
                     }`}
@@ -193,7 +197,7 @@ export default function LeaderboardItem({
                 aria-label="Downvote"
               >
                 <ChevronDown
-                strokeWidth={userVoteState === "down" ? 3 : 2}
+                  strokeWidth={userVoteState === "down" ? 3 : 2}
                   className={`h-4 w-4 md:h-5 md:w-5 ${
                     isDownvoteLoading ? "opacity-50" : ""
                   }`}
