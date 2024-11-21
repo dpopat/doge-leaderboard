@@ -13,7 +13,7 @@ const TaxDollarsDisplay = ({ value }: TaxDollarsDisplayProps) => {
       }}>
       <div className="text-center">
         <p className="text-6xl md:text-7xl font-semibold">
-          $<NumberTicker value={value} className="tracking-tight"/>M
+          $<NumberTicker value={value} className="tracking-tight"/>B
         </p>
         <p className="text-sm md:text-lg font-medium text-muted-foreground">
           Tax Dollars Wasted in 2023

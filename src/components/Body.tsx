@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-export const revalidate = 600; // Revalidate every 10 minutes (600 seconds)
+export const revalidate = 120;
 
 export default async function Body() {
   const { data, error } = await supabase.from("items_with_total_votes").select("*");
@@ -24,7 +24,7 @@ export default async function Body() {
     <section className="flex-1 px-4">
       <div className="my-32 space-y-10 max-w-4xl mx-auto">
         <div className="flex justify-center">
-          <TaxDollarsDisplay value={300} />
+          <TaxDollarsDisplay value={236} />
         </div>
         <div className="flex justify-center text-sm md:text-lg font-semibold text-gray-800 max-w-5xl mx-auto w-full">
           <button
