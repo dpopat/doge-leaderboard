@@ -1,12 +1,7 @@
 import Leaderboard from "./Leaderboard/Leaderboard";
 import supabase from "@/utils/supabase/client";
 import TaxDollarsDisplay from "@/components/TaxDollarsDisplay";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import HallToggle from "@/components/HallToggle";
 
 export const revalidate = 120;
 
@@ -26,32 +21,7 @@ export default async function Body() {
         <div className="flex justify-center">
           <TaxDollarsDisplay value={236} />
         </div>
-        <div className="flex justify-center text-sm md:text-lg font-semibold text-gray-800 max-w-5xl mx-auto w-full">
-          <button
-            className="w-1/2 rounded-none border-2 border-r-0 px-3 py-3 bg-gray-800 text-white"
-            aria-label="View Hall of Shame"
-            aria-pressed="true"
-          >
-            Hall Of Shame: Squanderers
-          </button>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  className="w-1/2 rounded-none border-2 border-l-0 px-3 py-3 bg-gray-100 text-gray-400"
-                  aria-label="View Hall of Fame"
-                  aria-pressed="false"
-                  disabled
-                >
-                  Hall Of Fame: American Heroes
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-sm">Coming Soon!</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
+        <HallToggle />
         <Leaderboard items={items} />
       </div>
     </section>
