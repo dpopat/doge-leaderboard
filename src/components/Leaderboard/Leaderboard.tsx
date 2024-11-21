@@ -32,7 +32,7 @@ export default function Leaderboard({ items }: LeaderboardProps) {
   const [sortBy, setSortBy] = useState<SortOption>("amount");
 
   const handleSurveyClick = () => {
-    window.open("https://x.com/dogeleaderboard", "_blank");
+    window.open("https://tally.so/r/wMr8p0", "_blank");
   };
 
   const sortedData = [...items].sort((a, b) => {
