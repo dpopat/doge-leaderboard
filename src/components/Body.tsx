@@ -3,8 +3,6 @@ import supabase from "@/utils/supabase/client";
 import TaxDollarsDisplay from "@/components/TaxDollarsDisplay";
 import HallToggle from "@/components/HallToggle";
 
-export const revalidate = 60;
-
 export default async function Body() {
   const { data, error } = await supabase.from("items_with_total_votes").select("*");
 
