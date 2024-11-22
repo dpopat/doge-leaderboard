@@ -1,4 +1,4 @@
-import { FaInstagram, FaXTwitter, FaTiktok } from "react-icons/fa6";
+import { FaInstagram, FaXTwitter, FaTiktok, FaEnvelope } from "react-icons/fa6";
 
 const Footer = () => {
   const socialLinks = [
@@ -16,6 +16,11 @@ const Footer = () => {
       icon: <FaTiktok className="w-6 h-6" />,
       href: "https://tiktok.com/@dogeleaderboard",
       label: "Follow us on TikTok",
+    },
+    {
+      icon: <FaEnvelope className="w-6 h-6" />,
+      href: "mailto:dogeleaderboard@gmail.com",
+      label: "Email us at dogeleaderboard@gmail.com",
     },
   ];
 
@@ -43,4 +48,4 @@ const Footer = () => {
   );
 };
 
-export default Footer; 
+export default Footer;
